@@ -1,0 +1,13 @@
+{
+	"name": "playwright-ai-qa-agents",
+	"description": "Ben Weese's Claude Code plugins for Playwright test automation.",
+	"owner": { "name": "Ben Weese", "url": "https://github.com/benweese" },
+	"plugins": [
+		{
+			"name": "playwright-qa-agents",
+			"source": "./",
+			"description": "Plan, generate, run and heal Playwright API and UI tests.",
+			"version": "0.1.0"
+		}
+	]
+}
