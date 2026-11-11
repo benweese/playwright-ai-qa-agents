@@ -44,6 +44,7 @@ The plan opens with numbered acceptance criteria (`AC-1`, `AC-2`, ...), and each
 | `/playwright-qa-agents:run-spec <path \| project \| id>` | Run and summarize |
 | `/playwright-qa-agents:check [fix]` | Lint |
 | `/playwright-qa-agents:bug-report <description>` | Write a bug report to `bugs/` |
+| `/playwright-qa-agents:update-docs [path]` | Bring the docs up to date: a detailed README that matches the code, JSDoc on everything, and only comments that explain why. Proves no behaviour changed |
 | `/playwright-qa-agents:playwright-cli` | Playwright's own skill for driving a browser with `playwright-cli`, used by the page-mapper, UI generator and healer (see below) |
 
 ## Bundled: Playwright's `playwright-cli` skill

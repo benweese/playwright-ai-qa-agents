@@ -7,7 +7,7 @@
 			"name": "playwright-qa-agents",
 			"source": "./",
 			"description": "Plan, generate, run and heal Playwright API and UI tests in TypeScript.",
-			"version": "0.6.1"
+			"version": "0.7.0"
 		}
 	]
 }
