@@ -26,14 +26,14 @@ flowchart LR
     X -->|"site disagrees with plan"| BUG[bug report]
 ```
 
-Each scenario gets an id in the plan (`PROD-003`), and the same id goes into the test title. A failing test points straight back to its written steps and expected result.
+The plan opens with numbered acceptance criteria (`AC-1`, `AC-2`, ...), and each scenario lists the criteria it covers. Each scenario also gets an id (`PROD-003`) that goes into its test title. A failing test points straight back to its written steps, its expected result and the requirement behind it.
 
 ## What's inside
 
 | Agent | Job |
 |---|---|
 | `page-mapper` | Walks one live page with `playwright-cli` and documents its controls, URL params, validation and empty states in `docs/pages/<page>.md` |
-| `api-test-planner` / `ui-test-planner` | Turn a brief into numbered, hand-runnable scenarios. Check existing tests and clients first, so nothing is duplicated or invented |
+| `api-test-planner` / `ui-test-planner` | Turn the description into numbered acceptance criteria, then hand-runnable scenarios that cover them. Check existing tests and clients first, so nothing is duplicated or invented |
 | `api-test-generator` | Writes the spec and any planned client methods, generates and tightens JSON schemas, lints and runs |
 | `ui-test-generator` | Writes locators → page object → spec, using the locators the live page actually exposes |
 | `ui-test-healer` | Fixes drift, ambiguity and timing failures, one test at a time, with at most 3 attempts per test |

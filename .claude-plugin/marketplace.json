@@ -7,7 +7,7 @@
 			"name": "playwright-qa-agents",
 			"source": "./",
 			"description": "Plan, generate, run and heal Playwright API and UI tests.",
-			"version": "0.1.1"
+			"version": "0.2.0"
 		}
 	]
 }

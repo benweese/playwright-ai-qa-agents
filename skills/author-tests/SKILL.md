@@ -1,6 +1,6 @@
 ---
 name: author-tests
-description: Author Playwright tests for a feature of the site. Use when the user asks to write, plan or generate tests for a feature, page, endpoint, URL or requirements file. Writes a brief, runs the right planner, stops for review, then generates, runs and (for UI) heals.
+description: Author Playwright tests for a feature of the site. Use when the user asks to write, plan or generate tests for a feature, page, endpoint, URL or requirements file. Gathers context, runs the right planner (which writes acceptance criteria and scenarios), stops for review, then generates, runs and (for UI) heals.
 argument-hint: <feature description | page URL | path to a requirements file>
 ---
 
@@ -11,20 +11,22 @@ Input: $ARGUMENTS
 If there's no input, ask what feature, page or endpoint to test.
 
 ```
-brief → (page-mapper, UI only) → planner → HUMAN REVIEW → generator → run and review → (healer, UI only)
+description → (page-mapper, UI only) → planner → HUMAN REVIEW → generator → run and review → (healer, UI only)
 ```
 
 Stop at **HUMAN REVIEW** until the user approves, unless they explicitly asked to run everything without stopping.
 
-## 1. Write the brief
+## 1. Gather context
 
-Create `briefs/<feature>-brief.md` (kebab-case feature name). Gather:
+Nothing is written to disk in this step. Collect what the planners need, to pass in their prompts:
 
-- **What it is:** the user's description, the requirements file, or what you can see at the URL.
-- **Type:** API (endpoints), UI (pages), or both. Split into an API part and a UI part if both.
-- **Acceptance criteria:** numbered, testable statements. If the input is vague, write your best reading and list questions under "Open questions".
-- **Existing coverage:** `ls tests/api tests/ui/specs plans docs/pages`, and anything relevant you find.
+- **The input as given:** the user's description verbatim, the requirements file's path (the planner reads it), or the URL and what you can see there.
+- **Feature name:** kebab-case, used for `plans/<feature>.md`.
+- **Type:** API (endpoints), UI (pages), or both.
+- **Existing coverage:** `ls tests/api tests/ui/specs plans docs/pages`, and any plan or spec that already covers this feature.
 - **API clients available:** `ls api`.
+
+If the input is too vague to plan from, ask the user one or two questions now rather than guessing.
 
 ## 2. Map the page (UI only)
 
@@ -32,13 +34,16 @@ If `docs/pages/<page>.md` is missing or the user says the page changed, run the 
 
 ## 3. Plan
 
-- API → **api-test-planner** with the brief.
-- UI → **ui-test-planner** with the brief and page reference.
-- Both → run both; they write separate sections or separate plan files.
+Give each planner, in its prompt: the input as given, the feature name, and the context from step 1. The planner writes numbered **acceptance criteria** at the top of the plan, then scenarios that each say which criteria they cover.
+
+- API → **api-test-planner**.
+- UI → **ui-test-planner**, plus the page reference path.
+- Both → run both into the same `plans/<feature>.md`: one shared acceptance criteria list, then an API section and a UI section.
 
 ## 4. Human review — STOP
 
 Summarize for the user:
+- the acceptance criteria, and any the scenarios don't cover (with the reason)
 - scenarios planned (ids and titles), and anything skipped as already covered
 - clients, helpers or files to create
 - site changes needed (missing labels/test ids)
