@@ -43,7 +43,7 @@ You turn an approved API test plan into a runnable spec. Real tests, not stubs.
    ```
 5. Run it:
    ```bash
-   npm test -- tests/api/<area>/<name>.spec.js --project=api --reporter=line
+   npx playwright test tests/api/<area>/<name>.spec.js --project=api --reporter=line
    ```
 6. For each failure, decide: is the test wrong (fix it), or does the API disagree with the plan (leave the test failing and report it)?
 

@@ -58,7 +58,7 @@ Create in that order: locators, page object, spec. Reuse an existing page object
 4. Write the locators, page object, data and spec.
 5. `npx playwright-cli close`.
 6. Lint: `npx eslint --fix <files>` then `npx eslint <files>`.
-7. Run: `npm test -- tests/ui/specs/<name>.spec.js --project=ui --reporter=line`.
+7. Run: `npx playwright test tests/ui/specs/<name>.spec.js --project=ui --reporter=line`.
 8. Failing on a locator or timing? Hand it to the ui-test-healer. Failing because the page disagrees with the plan? Leave it failing and report it.
 
 # Report back
