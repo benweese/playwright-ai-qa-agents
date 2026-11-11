@@ -54,7 +54,7 @@ Anything surprising: timing, ordering, things that load late, elements with no a
    npx playwright-cli open --browser=chrome
    npx playwright-cli goto <baseUrl>/<path>
    ```
-   `baseUrl` is in `config/environments.js` for the current `TEST_ENV`. Run `npx playwright-cli --help` for the full command list.
+   `baseUrl` is in `config/environments.ts` for the current `TEST_ENV`. Run `npx playwright-cli --help` for the full command list.
 3. Walk the page: `npx playwright-cli snapshot` for element refs; open menus and dropdowns, fill and submit forms, trigger every validation you can, read URL changes with `npx playwright-cli eval "() => location.search"`.
 4. Write or update the file, then `npx playwright-cli close`.
 

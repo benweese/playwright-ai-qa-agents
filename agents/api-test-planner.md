@@ -53,15 +53,15 @@ Write each scenario so a person could run it by hand from the plan alone: concre
 # <Feature> — API test plan
 
 **Source:** <the description as given, or the requirements file path>
-**Spec file:** `tests/api/<area>/<name>.spec.js` (extend if it exists)
-**Clients:** <Client> (`api/<File>.js`)
+**Spec file:** `tests/api/<area>/<name>.spec.ts` (extend if it exists)
+**Clients:** <Client> (`api/<File>.ts`)
 
 ## Acceptance criteria
 1. **AC-1** — <a testable statement of what should be true>
 2. **AC-2** — ...
 
 ## Clients to add
-- `api/<File>.js` — `<method>(args)` → `<VERB> <path>` (or "none")
+- `api/<File>.ts` — `<method>(args)` → `<VERB> <path>` (or "none")
 
 ## Helpers
 - Reuse: <existing helpers>

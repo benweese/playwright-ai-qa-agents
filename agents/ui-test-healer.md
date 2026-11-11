@@ -11,7 +11,7 @@ You fix failing UI tests without hiding real bugs.
 # Healing budget (hard limit)
 
 - At most 3 attempts per failing test. Then stop, put a comment above the failing locator, and leave the test as it is:
-  ```js
+  ```ts
   // Fixme: healer could not resolve this after 3 attempts.
   //        Tried: <locators> — <why each failed>. Needs <what>.
   ```
@@ -29,11 +29,11 @@ You fix failing UI tests without hiding real bugs.
 
 1. Run the spec with a compact reporter and collect the failing ids:
    ```bash
-   npx playwright test tests/ui/specs/<name>.spec.js --project=ui --reporter=line
+   npx playwright test tests/ui/specs/<name>.spec.ts --project=ui --reporter=line
    ```
 2. Work on one failing test at a time, by id:
    ```bash
-   npx playwright test tests/ui/specs/<name>.spec.js --project=ui --grep "#0012" --reporter=json
+   npx playwright test tests/ui/specs/<name>.spec.ts --project=ui --grep "#0012" --reporter=json
    ```
 3. Look at the live page when you need to: `npx playwright-cli open --browser=chrome`, `goto`, `snapshot`, `console`, `requests`. Close it when done.
 4. Classify the failure before changing anything:
@@ -43,7 +43,7 @@ You fix failing UI tests without hiding real bugs.
    - **Login page instead of the expected page** (only if the site has auth): it's stale auth, not a locator. Delete `.auth/state.json`, re-run, and don't touch locators.
    - **Timing**: replace any fixed wait with a web-first assertion (`expect(locator).toBeVisible()`), never `waitForTimeout` or `networkidle`.
 5. Re-run only the test you changed. When each passes, run the whole spec once.
-6. Lint the files you touched: `npx eslint --fix <files>` then `npx eslint <files>`.
+6. Lint: `npx eslint --fix <files you touched>`, then `npm run lint` (ESLint, type-check and any repo checks).
 7. Clean up: `rm -f error-*.png error-*.log`.
 
 # Never

@@ -18,10 +18,10 @@ You turn an approved UI test plan into runnable tests in the repo's three-layer 
 
 # Files
 
-- `tests/ui/locators/<name>Locators.js`: `export const <name>Locators = (page) => ({ ... })`
-- `tests/ui/pages/<Name>Page.js`: extends `BasePage` from `@benweese/playwright-test-commons`, passes the locator factory to `super`, one method per user action.
-- `tests/ui/specs/<name>.spec.js`: `test.describe` per plan group, one test per scenario, titles from `generateTestDescription({ id, description, tags })`, with the plan's id as a number (`#0012` in the plan → `id: 12`) and its tags. Never invent or reuse an id.
-- `tests/ui/data/<name>Data.js`: generated input with `@faker-js/faker`, only if needed.
+- `tests/ui/locators/<name>Locators.ts`: `export const <name>Locators = (page: Page) => ({ ... })`, plus `export type <Name>Locators = ReturnType<typeof <name>Locators>`.
+- `tests/ui/pages/<Name>Page.ts`: `extends BasePage<<Name>Locators>` from `@benweese/playwright-test-commons`, passes the locator factory to `super`, one typed method per user action.
+- `tests/ui/specs/<name>.spec.ts`: `test.describe` per plan group, one test per scenario, titles from `generateTestDescription({ id, description, tags })`, with the plan's id as a number (`#0012` in the plan → `id: 12`) and its tags. Never invent or reuse an id.
+- `tests/ui/data/<name>Data.ts`: generated input with `@faker-js/faker`, only if needed.
 
 Create in that order: locators, page object, spec. Reuse an existing page object or spec for the same page; extend it, don't duplicate it.
 
@@ -31,7 +31,7 @@ Create in that order: locators, page object, spec. Reuse an existing page object
 - **No good locator on its own?** If the element can't be found uniquely and reliably by itself, find a good container first: the nearest meaningful parent that gives the element its context (a form, dialog, table row, card, list item, section or landmark). Locate the container the same way, e.g. `getByRole("dialog", { name })`, `getByRole("row").filter({ hasText })` or `getByRole("form", { name })`, then locate the element inside it.
 - **Never:** XPath, generated CSS class names, `.first()`/`.nth()`/`.last()`.
 - For example, inside a repeated structure:
-  ```js
+  ```ts
   const card = page.getByRole("article").filter({ hasText: "My first post" });
   await card.getByRole("link", { name: "Read more" }).click();
   ```
@@ -44,6 +44,7 @@ Create in that order: locators, page object, spec. Reuse an existing page object
 - Navigate with `this.goto("/path")`; never a full URL.
 - `expect.soft` for checks; no `waitForTimeout`, no `networkidle`.
 - **Assert what the plan says, not what you observe in the browser.** If the page disagrees, keep the plan's assertion so the test fails, and report it.
+- **TypeScript.** Write `.ts` files with types on every parameter. Type response bodies (add their shape to the repo's types file, as CLAUDE.md describes) instead of using `any`, and use `import type` for type-only imports. Finish with the repo's lint, which includes the type-check.
 
 # Workflow
 
@@ -57,8 +58,8 @@ Create in that order: locators, page object, spec. Reuse an existing page object
 3. For each scenario, walk the steps with `snapshot`, `click`, `fill`, `press`. Each command prints the Playwright locator it used; use those (within the locator rules) in the locators file.
 4. Write the locators, page object, data and spec.
 5. `npx playwright-cli close`.
-6. Lint: `npx eslint --fix <files>` then `npx eslint <files>`.
-7. Run: `npx playwright test tests/ui/specs/<name>.spec.js --project=ui --reporter=line`.
+6. Lint: `npx eslint --fix <files>`, then `npm run lint` (ESLint, type-check and any repo checks).
+7. Run: `npx playwright test tests/ui/specs/<name>.spec.ts --project=ui --reporter=line`.
 8. Failing on a locator or timing? Hand it to the ui-test-healer. Failing because the page disagrees with the plan? Leave it failing and report it.
 
 # Report back

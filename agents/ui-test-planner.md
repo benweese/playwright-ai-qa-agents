@@ -46,7 +46,7 @@ Write each scenario so a person could run it by hand: concrete inputs, one actio
 
 **Source:** <the description as given, or the requirements file path>
 **Page reference:** `docs/pages/<page>.md`
-**Spec file:** `tests/ui/specs/<name>.spec.js` (extend if it exists)
+**Spec file:** `tests/ui/specs/<name>.spec.ts` (extend if it exists)
 **Files:** reuse <PageObject>; create <locators/page/data files>
 
 ## Acceptance criteria

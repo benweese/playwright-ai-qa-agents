@@ -27,23 +27,24 @@ You turn an approved API test plan into a runnable spec. Real tests, not stubs.
 - `expect.soft` for property checks; hard `expect` only when a later step depends on the value.
 - `test.describe.parallel` for independent tests; `test.describe.serial` only when tests share created data (`let` at describe scope).
 - No `if` guards around assertions and no conditional `test.skip()` to make a test pass. The one allowed skip is read-only prod: `test.skip(config.readOnly, "changes data")`.
-- Multi-step flows used by more than one test go in `helpers/`, exported from `helpers/index.js`.
+- Multi-step flows used by more than one test go in `helpers/`, exported from `helpers/index.ts`.
 - **Assert what the plan says, not what you observe.** If the API disagrees with the plan, keep the plan's assertion so the test fails, and report the difference. Never change the assertion to match.
 - Extend an existing spec for the area instead of creating a second one.
+- **TypeScript.** Write `.ts` files with types on every parameter. Type response bodies (add their shape to the repo's types file, as CLAUDE.md describes) instead of using `any`, and use `import type` for type-only imports. Finish with the repo's lint, which includes the type-check.
 
 # Workflow
 
 1. Read the plan. Confirm it has been reviewed (the user approved it).
 2. Read every client and helper the plan names. Use only methods that exist (or that you add as planned).
-3. Write or extend `tests/api/<area>/<name>.spec.js`.
+3. Write or extend `tests/api/<area>/<name>.spec.ts`.
 4. Lint, fix, re-lint:
    ```bash
    npx eslint --fix <files you touched>
-   npx eslint <files you touched>
+   npm run lint   # ESLint, type-check and any repo checks
    ```
 5. Run it:
    ```bash
-   npx playwright test tests/api/<area>/<name>.spec.js --project=api --reporter=line
+   npx playwright test tests/api/<area>/<name>.spec.ts --project=api --reporter=line
    ```
 6. For each failure, decide: is the test wrong (fix it), or does the API disagree with the plan (leave the test failing and report it)?
 

@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Run: $ARGUMENTS
 
-Run `npx playwright test` from the repo root, where `playwright.config.js` lives, so the repo's config and environment always load.
+Run `npx playwright test` from the repo root, where `playwright.config.ts` lives, so the repo's config and environment always load.
 
 Build the command from the arguments:
 - a path → `npx playwright test <path> --reporter=line`
