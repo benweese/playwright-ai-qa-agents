@@ -54,6 +54,23 @@ external system, a workaround and what it works around, a non-obvious constraint
 
 - **Remove:** comments that restate the code (`// loop over items`), commented-out code,
   outdated TODOs, banner and divider comments, and notes that are already in the JSDoc.
+- **Remove comments that only made sense to whoever wrote them.** Code and docs are read by
+  people who never saw how they were written. Delete or rewrite anything that depends on that
+  history or on a conversation, for example:
+  - change history: "now uses…", "no longer…", "stays JavaScript", "switched to…", "was…",
+    "instead of the old…", "(fixed)", "new:" (git history records this)
+  - replies to a question or decision nobody reading the file asked: "yes, this is intentional",
+    "we decided…", "as discussed", "per review"
+  - references to things outside the repo the reader can't see: a chat, a ticket with no link,
+    "the earlier approach", "my local setup"
+  - private notes and asides: "hmm", "not sure why this works", "TODO: think about this"
+
+  The test: would a new contributor, reading only this file today, understand the comment and
+  need it? If the comment hides a real reason, rewrite it as a plain present-tense "why"
+  ("ESLint can't load a .ts config without an extra loader") or move the reason to the commit
+  message. Otherwise delete it.
+- **Same rule for docs:** READMEs, `CLAUDE.md` and JSDoc describe what is true now, in the present
+  tense. No "updated to…", "we now…" or "previously…"; that belongs in commit messages.
 - **Move:** explanations of a value or field into JSDoc on that value or field, so editors show
   them on hover.
 - **Shorten:** keep "why" comments to one or two lines.
@@ -108,6 +125,6 @@ same way and fix anything out of date.
 
 ## Report back
 
-Files changed, grouped as JSDoc added, JSDoc fixed, comments removed or moved, README sections
-rewritten. The verification results. Anything you found but did not change (bugs, unclear
+Files changed, grouped as JSDoc added, JSDoc fixed, comments removed or moved (including
+history and note-to-self comments), README sections rewritten. The verification results. Anything you found but did not change (bugs, unclear
 behaviour, decisions the user should make).
