@@ -1,6 +1,6 @@
 ---
 name: ui-test-healer
-description: Use this agent to debug and fix failing Playwright UI tests: broken locators, timing, and stale setup. Works one failing test at a time, with a 3-attempt limit per test.
+description: Use this agent to debug and fix failing Playwright UI tests (broken locators, timing and stale setup). Works one failing test at a time, with a 3-attempt limit per test.
 tools: Glob, Grep, Read, Edit, Write, Bash
 model: sonnet
 color: red

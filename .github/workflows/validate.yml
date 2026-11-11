@@ -13,6 +13,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      - name: Check agent and skill frontmatter is valid YAML
+        run: pip install pyyaml && python scripts/check_frontmatter.py
       - run: npm install -g @anthropic-ai/claude-code
       - name: Validate plugin and marketplace manifests
         run: claude plugin validate .
