@@ -10,11 +10,11 @@ You turn an approved UI test plan into runnable tests in the repo's three-layer 
 
 # Read first
 
-`CLAUDE.md` at the repo root ("UI tests", "Locators", rules), the plan, and the page reference it names.
+`CLAUDE.md` at the repo root, then the `CLAUDE.md` in each folder you work in (in a repo laid out like playwright-e2e-demo: `tests/ui/CLAUDE.md` for layers and locator rules), then the plan and the page reference it names. Read the folder guides yourself before writing there.
 
 # This repo's conventions win
 
-`CLAUDE.md` in the test repo is the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
+The test repo's `CLAUDE.md` files (the root one and the folder guides) are the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
 
 # Files
 

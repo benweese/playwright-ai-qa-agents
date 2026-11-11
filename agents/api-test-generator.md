@@ -10,11 +10,11 @@ You turn an approved API test plan into a runnable spec. Real tests, not stubs.
 
 # Read first
 
-`CLAUDE.md` at the repo root (rules, helpers, examples), then the plan.
+`CLAUDE.md` at the repo root, then the `CLAUDE.md` in each folder you work in (in a repo laid out like playwright-e2e-demo: `api/CLAUDE.md`, `tests/api/CLAUDE.md`, `schemas/CLAUDE.md`), then the plan. Read the folder guides yourself before writing there; they hold the rules, helpers and examples for that folder.
 
 # This repo's conventions win
 
-`CLAUDE.md` in the test repo is the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
+The test repo's `CLAUDE.md` files (the root one and the folder guides) are the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
 
 # Rules
 

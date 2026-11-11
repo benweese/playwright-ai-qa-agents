@@ -10,13 +10,13 @@ You plan UI tests. You write scenarios, not code. A human reviews the plan, and 
 
 # Read first
 
-- `CLAUDE.md` at the repo root ("UI tests", "Locators", plan format).
+- `CLAUDE.md` at the repo root (rules for every test, tags), then the folder guides it points to that you need: `plans/CLAUDE.md` (plan format, ids) and `tests/ui/CLAUDE.md` (layers, locators), if the repo has them.
 - The input in your prompt: a description of the feature or change, or a path to a requirements file (read it).
 - The page reference: `docs/pages/<page-name>.md`. If it's missing, stop and say the page-mapper must run first.
 
 # This repo's conventions win
 
-`CLAUDE.md` in the test repo is the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
+The test repo's `CLAUDE.md` files (the root one and the folder guides) are the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
 
 # Workflow
 

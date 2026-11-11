@@ -71,7 +71,7 @@ Run `/plugin update` to pick up a new version.
 - [playwright-test-commons](https://github.com/benweese/playwright-test-commons) v0.4.0 or later (typed API responses, numeric test ids)
 - `@playwright/cli` as a dev dependency, for the agents that drive a browser
 - `npm run lint` that includes the type-check (and ideally JSDoc rules)
-- A `CLAUDE.md` describing the repo's rules, helpers and site quirks. Agents follow it over their own defaults
+- A `CLAUDE.md` describing the repo's rules, helpers and site quirks, ideally split into a short root file and a guide per folder (`api/`, `tests/api/`, `tests/ui/`, `plans/`, ...) so each session loads only what it needs. Agents follow them over their own defaults
 
 ## Usage
 
@@ -95,14 +95,14 @@ It maps the page, drafts `plans/<feature>.md` and **stops for your review**. Onc
 
 ### Skills
 
-| Skill                                                    | Use                                                                                                                                                      |
-| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/playwright-qa-agents:author-tests <feature>`           | The full flow above                                                                                                                                      |
-| `/playwright-qa-agents:run-spec <path \| project \| id>` | Run a spec, a project (`smoke`, `api`, `ui`) or one test by id (`12` or `#0012`), and summarize                                                          |
-| `/playwright-qa-agents:check [fix]`                      | Run the repo's lint, optionally auto-fixing                                                                                                              |
-| `/playwright-qa-agents:bug-report <description>`         | Write a bug report to `bugs/`, using the test and plan if a test id is given                                                                             |
-| `/playwright-qa-agents:update-docs [path]`               | Bring the docs up to date: a detailed README that matches the code, JSDoc on everything, and only comments that explain why. Proves no behaviour changed |
-| `/playwright-qa-agents:playwright-cli`                   | Playwright's own skill for driving a browser with `playwright-cli`, used by the page-mapper, UI generator and healer (see below)                         |
+| Skill                                                    | Use                                                                                                                                                                                                            |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/playwright-qa-agents:author-tests <feature>`           | The full flow above                                                                                                                                                                                            |
+| `/playwright-qa-agents:run-spec <path \| project \| id>` | Run a spec, a project (`smoke`, `api`, `ui`) or one test by id (`12` or `#0012`), and summarize                                                                                                                |
+| `/playwright-qa-agents:check [fix]`                      | Run the repo's lint, optionally auto-fixing                                                                                                                                                                    |
+| `/playwright-qa-agents:bug-report <description>`         | Write a bug report to `bugs/`, using the test and plan if a test id is given                                                                                                                                   |
+| `/playwright-qa-agents:update-docs [path]`               | Bring the docs up to date: a detailed README that matches the code, `CLAUDE.md` split into a root file and folder guides, JSDoc on everything, and only comments that explain why. Proves no behaviour changed |
+| `/playwright-qa-agents:playwright-cli`                   | Playwright's own skill for driving a browser with `playwright-cli`, used by the page-mapper, UI generator and healer (see below)                                                                               |
 
 ## Guardrails
 

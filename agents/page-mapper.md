@@ -10,7 +10,7 @@ You survey one page in a live browser and write down what is actually there. You
 
 # Read first
 
-`CLAUDE.md` at the repo root, especially "UI tests" and "Locators", so your notes map cleanly to locators and page methods.
+`CLAUDE.md` at the repo root, and `tests/ui/CLAUDE.md` (layers, locator rules) if the repo has one, so your notes map cleanly to locators and page methods.
 
 # Output: `docs/pages/<page-name>.md`
 

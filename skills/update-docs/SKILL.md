@@ -1,6 +1,6 @@
 ---
 name: update-docs
-description: Bring a repo's documentation up to date. Rewrites the README so it is detailed and matches the code, adds or fixes JSDoc on every function, class, method, type and option, and removes comments that only restate the code. Use when the user asks to update, review or clean up READMEs, JSDoc, code comments or documentation in general.
+description: Bring a repo's documentation up to date. Rewrites the README so it is detailed and matches the code, keeps CLAUDE.md files split into a short root file and per-folder guides, adds or fixes JSDoc on every function, class, method, type and option, and removes comments that only restate the code. Use when the user asks to update, review or clean up READMEs, JSDoc, code comments or documentation in general.
 argument-hint: "[path to limit the sweep, e.g. src/ or api/]"
 ---
 
@@ -13,7 +13,7 @@ Documentation only. Never change behaviour: no renamed identifiers, no reordered
 
 ## 1. Learn the repo first
 
-- Read `CLAUDE.md` (if present), `package.json` (scripts, dependencies, `exports`), the lint
+- Read every `CLAUDE.md` (the root one and any in subfolders), `package.json` (scripts, dependencies, `exports`), the lint
   config, CI workflows, and every source file in scope. Docs describe the code as it is, so
   read the code before writing about it.
 - Note how the repo is meant to be used: what it exports or runs, how it is installed, how
@@ -101,10 +101,28 @@ Rules for the README:
 - **Show, don't list:** prefer a short real example to a paragraph about it.
 - Write plainly, in short sentences. Run the repo's formatter on the file if it has one.
 
-If the repo has a `CLAUDE.md` or other docs (`docs/`, guides), check them against the code the
-same way and fix anything out of date.
+If the repo has other docs (`docs/`, guides), check them against the code the same way and fix
+anything out of date.
 
-## 5. Verify
+## 5. CLAUDE.md files
+
+Claude Code loads the root `CLAUDE.md` in every session, and a folder's `CLAUDE.md` only when it
+works in that folder. Keep them split that way, so each session reads as little as possible:
+
+- **Root `CLAUDE.md`:** what applies everywhere (what the repo is, commands, rules for every file
+  or test, language conventions, dependencies) and a table pointing to each folder guide, with a
+  line telling the reader to open a folder's guide before working there.
+- **Folder `CLAUDE.md`:** the rules, helpers and examples for that folder only. Create one when a
+  folder has rules of its own, or when a section of the root file only matters there; move that
+  section out of the root file.
+- **No duplication.** Each rule lives in the most specific file it applies to. The root file
+  points to details rather than repeating them.
+- **Accurate.** Check every path, command, helper and example against the code, as for the README.
+  Label example code that isn't in the repo as an example.
+- Keep the README's layout section and the root file's pointer table in step with the folder
+  guides that exist.
+
+## 6. Verify
 
 1. Run the repo's lint, type-check and tests (from `package.json` scripts). All must pass.
 2. Prove only documentation changed. For TypeScript, compile the previous commit and the

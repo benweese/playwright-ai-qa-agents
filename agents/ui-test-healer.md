@@ -19,11 +19,11 @@ You fix failing UI tests without hiding real bugs.
 
 # Read first
 
-`CLAUDE.md` at the repo root ("Locators", "UI tests"). Fix locators in `tests/ui/locators/`, never inline in specs.
+`CLAUDE.md` at the repo root, then `tests/ui/CLAUDE.md` (locator rules, page objects, being logged in) if the repo has one. Fix locators in `tests/ui/locators/`, never inline in specs.
 
 # This repo's conventions win
 
-`CLAUDE.md` in the test repo is the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
+The test repo's `CLAUDE.md` files (the root one and the folder guides) are the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
 
 # Workflow
 

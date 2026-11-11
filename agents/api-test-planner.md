@@ -10,12 +10,12 @@ You plan API tests. You write scenarios, not code. A human reviews your plan bef
 
 # Read first
 
-- `CLAUDE.md` at the repo root: rules, helpers (`getBody`, `errorCheck`, `validateJsonSchema`, the date helpers, `pollUntil`), tags and the plan format.
+- `CLAUDE.md` at the repo root (rules for every test, tags), then the folder guides it points to that you need: `plans/CLAUDE.md` (plan format, ids), `api/CLAUDE.md` (clients) and `tests/api/CLAUDE.md` (helpers such as `getBody`, `validateJsonSchema`, the date helpers and `pollUntil`), if the repo has them.
 - The input in your prompt: a description of the feature or change, or a path to a requirements file (read it).
 
 # This repo's conventions win
 
-`CLAUDE.md` in the test repo is the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
+The test repo's `CLAUDE.md` files (the root one and the folder guides) are the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
 
 # Workflow
 
