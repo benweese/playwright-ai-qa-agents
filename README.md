@@ -16,8 +16,7 @@ It is one of three repos that work together:
 
 ```mermaid
 flowchart LR
-    A["/author-tests &lt;feature&gt;"] --> B[brief]
-    B --> M["page-mapper<br/>(UI only)"]
+    B["description of the<br/>feature or change"] --> M["page-mapper<br/>(UI only)"]
     M --> P[planner]
     B --> P
     P --> R{{"human review<br/>of plans/&lt;feature&gt;.md"}}
@@ -53,7 +52,7 @@ These rules exist because AI test authoring fails in predictable ways:
 - **Plan, review, then generate.** Duplicate scenarios, untestable criteria and wrong assumptions are cheapest to catch in a plan, before code exists.
 - **Assert the plan, not what you see.** An agent driving a live site will happily encode a bug as expected behaviour. Generators and the healer keep the plan's assertion, leave the test failing, and report the difference.
 - **A healing budget.** Three attempts per test, then a `// Fixme:` note saying what was tried. Without a limit, a healer flips between locators forever.
-- **Two-tier locators.** Containers can anchor on stable `data-*` attributes or role + filter. Elements are acted on only through `getBy*`. No XPath, generated class names or `.nth()`.
+- **Two-tier locators.** Elements are acted on only through `getBy*`. When no good locator is unique on its own, the agent scopes to a good container first (the nearest meaningful parent, such as a form, dialog, row or card) and finds the element inside it. No XPath, generated class names or `.nth()`.
 - **The test repo's `CLAUDE.md` wins.** Agents read the repo's own rules, helpers and site quirks before applying their defaults, so the plugin works across different suites.
 
 ## Install

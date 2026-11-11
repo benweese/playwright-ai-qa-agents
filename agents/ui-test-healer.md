@@ -38,7 +38,7 @@ You fix failing UI tests without hiding real bugs.
 3. Look at the live page when you need to: `npx playwright-cli open --browser=chrome`, `goto`, `snapshot`, `console`, `requests`. Close it when done.
 4. Classify the failure before changing anything:
    - **Drift** (renamed, role changed, moved): find the same element with an allowed locator and replace it.
-   - **Ambiguity** (matches several elements): don't pick another attribute on the same element. Scope to the container that makes it unique, then the inner locator.
+   - **Ambiguity** (matches several elements): don't pick another attribute on the same element. Scope to a good container (the nearest meaningful parent that makes it unique, such as a form, dialog, row or card), then the inner locator.
    - **Missing** (element gone): check whether the feature changed. If the site is broken, mark the test `test.fixme()` with `// Fixme: element not found. Possible site bug. Expected: ... Actual: ...`. Don't guess a replacement.
    - **Login page instead of the expected page** (only if the site has auth): it's stale auth, not a locator. Delete `.auth/state.json`, re-run, and don't touch locators.
    - **Timing**: replace any fixed wait with a web-first assertion (`expect(locator).toBeVisible()`), never `waitForTimeout` or `networkidle`.

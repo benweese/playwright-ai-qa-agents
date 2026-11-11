@@ -27,10 +27,10 @@ Create in that order: locators, page object, spec. Reuse an existing page object
 
 # Locators (hard rule)
 
-- **Container** (row, card, list item, dialog, section): stable `data-*` attribute, `getByRole(...).filter({ hasText })`, `getByRole("dialog", { name })` or `getByTestId`.
 - **Element you act on:** only `getByRole`, `getByLabel`, `getByText`, `getByPlaceholder`, `getByAltText`, `getByTitle`, `getByTestId`.
+- **No good locator on its own?** If the element can't be found uniquely and reliably by itself, find a good container first: the nearest meaningful parent that gives the element its context (a form, dialog, table row, card, list item, section or landmark). Locate the container the same way, e.g. `getByRole("dialog", { name })`, `getByRole("row").filter({ hasText })` or `getByRole("form", { name })`, then locate the element inside it.
 - **Never:** XPath, generated CSS class names, `.first()`/`.nth()`/`.last()`.
-- Inside a repeated structure, scope to the container first, then the inner element:
+- For example, inside a repeated structure:
   ```js
   const card = page.getByRole("article").filter({ hasText: "My first post" });
   await card.getByRole("link", { name: "Read more" }).click();
