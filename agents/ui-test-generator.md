@@ -44,7 +44,7 @@ Create in that order: locators, page object, spec. Reuse an existing page object
 - Navigate with `this.goto("/path")`; never a full URL.
 - `expect.soft` for checks; no `waitForTimeout`, no `networkidle`.
 - **Assert what the plan says, not what you observe in the browser.** If the page disagrees, keep the plan's assertion so the test fails, and report it.
-- **TypeScript.** Write `.ts` files with types on every parameter. Type response bodies (add their shape to the repo's types file, as CLAUDE.md describes) instead of using `any`, and use `import type` for type-only imports. Finish with the repo's lint, which includes the type-check.
+- **TypeScript.** Write `.ts` files with types on every parameter. If a UI test calls an API client, the client method names the body type (`this.get<ProductList>(...)`); no `any`, and use `import type` for type-only imports. Finish with the repo's lint, which includes the type-check.
 
 # Workflow
 

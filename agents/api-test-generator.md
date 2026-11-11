@@ -26,11 +26,11 @@ You turn an approved API test plan into a runnable spec. Real tests, not stubs.
 - New endpoint with no schema yet: run the test once with `{ update: true }`, read the generated file in `schemas/`, tighten it (required fields, enums), then **remove the flag**. Never leave `update: true` in a spec.
 - `expect.soft` for property checks; hard `expect` only when a later step depends on the value.
 - `test.describe.parallel` for independent tests; `test.describe.serial` only when tests share created data (`let` at describe scope).
-- No `if` guards around assertions and no conditional `test.skip()` to make a test pass. The one allowed skip is read-only prod: `test.skip(config.readOnly, "changes data")`.
+- No `if` guards around assertions and no conditional `test.skip()` to make a test pass.
 - Multi-step flows used by more than one test go in `helpers/`, exported from `helpers/index.ts`.
 - **Assert what the plan says, not what you observe.** If the API disagrees with the plan, keep the plan's assertion so the test fails, and report the difference. Never change the assertion to match.
 - Extend an existing spec for the area instead of creating a second one.
-- **TypeScript.** Write `.ts` files with types on every parameter. Type response bodies (add their shape to the repo's types file, as CLAUDE.md describes) instead of using `any`, and use `import type` for type-only imports. Finish with the repo's lint, which includes the type-check.
+- **TypeScript.** Write `.ts` files with types on every parameter. Type each response body once, in the client method (`this.get<ProductList>("productsList")`, with the shape in the repo's types file): Playwright's `APIResponse<T>` then types `getBody`, `pollUntil` and the repo's helpers, so specs don't repeat it. No `any`, and use `import type` for type-only imports. Finish with the repo's lint, which includes the type-check.
 
 # Workflow
 

@@ -37,7 +37,7 @@ You plan API tests. You write scenarios, not code. A human reviews your plan bef
    - Boundaries: zero, negative, max length, first/last page.
    - Dates: ordering (`expectSortedByDate`), ranges (`expectDateBetween`), formats beyond ISO (`expectValidDate` with a format).
    - Eventually-consistent results: `pollUntil`, never fixed waits.
-   - Data-changing scenarios must skip on prod (`config.readOnly`).
+   - Data-changing scenarios clean up what they create (see the repo's CLAUDE.md).
 7. **Assign ids.** Ids are numbers, unique across the whole repo, written `#0012` in the plan (and `id: 12` in code). They say nothing about the area or kind of test: that comes from tags. Find the highest id already used, in the specs and in every plan (including scenarios not generated yet), and continue from there:
    ```bash
    { npx playwright test --list; cat plans/*.md; } 2>/dev/null | grep -oE '#[0-9]{4,}' | tr -d '#' | sort -n | tail -1

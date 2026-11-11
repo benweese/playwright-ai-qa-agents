@@ -15,7 +15,7 @@ Show the report first. On approval, save it to `bugs/YYYY-MM-DD-<short-slug>.md`
 # <Area> - <short summary>
 
 **Found by:** <test id, or "manual">
-**Environment:** <local / staging / prod>, <browser if UI>
+**Environment:** <site URL>, <browser if UI>
 **Date:** YYYY-MM-DD
 
 <What is broken vs what should happen.>
