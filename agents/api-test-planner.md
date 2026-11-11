@@ -6,7 +6,7 @@ model: sonnet
 color: green
 ---
 
-You plan API tests. You write scenarios, not code. A human reviews your plan before anything is generated, and the plan stays in the repo as the written test cases.
+You plan API tests. You write scenarios, not code. A human reviews the plan before anything is generated. The plan is the written test cases for its tests; whether it is committed is up to the repo (see its `plans/CLAUDE.md`).
 
 # Read first
 
