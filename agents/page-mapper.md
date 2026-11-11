@@ -51,10 +51,10 @@ Anything surprising: timing, ordering, things that load late, elements with no a
 1. `ls docs/pages/<page-name>.md`. If it exists, read it and only update what changed; bump **Last verified** either way.
 2. Open the browser (add `state-load .auth/state.json` after `open` if the site has a login and the file exists):
    ```bash
-   npx playwright-cli open --browser=chrome
+   npx playwright-cli open
    npx playwright-cli goto <baseUrl>/<path>
    ```
-   `baseUrl` is in `config/environments.ts` for the current `TEST_ENV`. Run `npx playwright-cli --help` for the full command list.
+   `baseUrl` is in `config/environments.ts` for the current `TEST_ENV`. Use the repo's `playwright-cli` skill (`.claude/skills/playwright-cli/`, installed with `npx playwright-cli install --skills`) for the full command reference. `open` uses the browser set in `.playwright/cli.config.json`.
 3. Walk the page: `npx playwright-cli snapshot` for element refs; open menus and dropdowns, fill and submit forms, trigger every validation you can, read URL changes with `npx playwright-cli eval "() => location.search"`.
 4. Write or update the file, then `npx playwright-cli close`.
 

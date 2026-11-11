@@ -81,7 +81,7 @@ Or from inside Claude Code:
 
 ### What the test repo needs
 
-The agents expect the layout used by [playwright-e2e-demo](https://github.com/benweese/playwright-e2e-demo): `api/` clients, `tests/api|ui/` specs, `schemas/`, `plans/`, `docs/pages/`, TypeScript with a `playwright.config.ts` at the repo root, an `npm run lint` that includes the type-check, and a `CLAUDE.md` that describes the repo's rules. The tests use [playwright-test-commons](https://github.com/benweese/playwright-test-commons).
+The agents expect the layout used by [playwright-e2e-demo](https://github.com/benweese/playwright-e2e-demo): `api/` clients, `tests/api|ui/` specs, `schemas/`, `plans/`, `docs/pages/`, TypeScript with a `playwright.config.ts` at the repo root, `@playwright/cli` with its skill installed (`npx playwright-cli install --skills`), an `npm run lint` that includes the type-check, and a `CLAUDE.md` that describes the repo's rules. The tests use [playwright-test-commons](https://github.com/benweese/playwright-test-commons).
 
 ## Development
 
