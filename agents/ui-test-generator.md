@@ -45,6 +45,7 @@ Create in that order: locators, page object, spec. Reuse an existing page object
 - `expect.soft` for checks; no `waitForTimeout`, no `networkidle`.
 - **Assert what the plan says, not what you observe in the browser.** If the page disagrees, keep the plan's assertion so the test fails, and report it.
 - **TypeScript.** Write `.ts` files with types on every parameter. If a UI test calls an API client, the client method names the body type (`this.get<ProductList>(...)`); no `any`, and use `import type` for type-only imports. Finish with the repo's lint, which includes the type-check.
+- **Document reusable code.** Every new client method, page object method, locator factory and helper gets a JSDoc: summary, `@param` per parameter, `@returns`, and `@throws` if it can throw. For a client method, name the endpoint and the response to expect. Comment only to explain why, never to restate the code. Specs need no comments: their titles and the plan document them.
 
 # Workflow
 

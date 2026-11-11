@@ -31,6 +31,7 @@ You turn an approved API test plan into a runnable spec. Real tests, not stubs.
 - **Assert what the plan says, not what you observe.** If the API disagrees with the plan, keep the plan's assertion so the test fails, and report the difference. Never change the assertion to match.
 - Extend an existing spec for the area instead of creating a second one.
 - **TypeScript.** Write `.ts` files with types on every parameter. Type each response body once, in the client method (`this.get<ProductList>("productsList")`, with the shape in the repo's types file): Playwright's `APIResponse<T>` then types `getBody`, `pollUntil` and the repo's helpers, so specs don't repeat it. No `any`, and use `import type` for type-only imports. Finish with the repo's lint, which includes the type-check.
+- **Document reusable code.** Every new client method, page object method, locator factory and helper gets a JSDoc: summary, `@param` per parameter, `@returns`, and `@throws` if it can throw. For a client method, name the endpoint and the response to expect. Comment only to explain why, never to restate the code. Specs need no comments: their titles and the plan document them.
 
 # Workflow
 
