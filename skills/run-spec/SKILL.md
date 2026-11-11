@@ -1,7 +1,7 @@
 ---
 name: run-spec
 description: Run a Playwright spec, project or test id and summarize the results.
-argument-hint: <spec path | project (smoke|api|ui) | test id like HOME-003> [headed] [TEST_ENV]
+argument-hint: <spec path | project (smoke|api|ui) | test id like 12 or #0012> [headed] [TEST_ENV]
 allowed-tools: Bash(npx playwright test:*) Bash(TEST_ENV=*)
 disable-model-invocation: true
 ---
@@ -13,7 +13,7 @@ Run `npx playwright test` from the repo root, where `playwright.config.js` lives
 Build the command from the arguments:
 - a path → `npx playwright test <path> --reporter=line`
 - `smoke`, `api` or `ui` → `npx playwright test --project=<name> --reporter=line`
-- an id like `HOME-003` → `npx playwright test --grep "HOME-003" --reporter=line`
+- an id like `12` or `#0012` → `npx playwright test --grep "#0012" --reporter=line` (always the `#` and four digits, so it matches only that test)
 - `headed` → add `--headed`
 - `local`, `staging` or `prod` → prefix `TEST_ENV=<env>`
 

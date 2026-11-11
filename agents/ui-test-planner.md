@@ -29,7 +29,11 @@ You plan UI tests. You write scenarios, not code. A human reviews the plan, and 
    ```
    Note which page objects can be reused and which locator/page/data files need creating.
 4. Design scenarios that cover every acceptance criterion: main user journeys, form validation (exact messages from the page reference), navigation and URL state, empty and error states, keyboard access for key controls, responsive behaviour if the input asks for it.
-5. Assign ids with a short area prefix (`HOME`, `BLOG`, `CONTACT`), continuing after the highest id already used.
+5. **Assign ids.** Ids are numbers, unique across the whole repo, written `#0012` in the plan (and `id: 12` in code). They say nothing about the area or kind of test: that comes from tags. Find the highest id already used, in the specs and in every plan (including scenarios not generated yet), and continue from there:
+   ```bash
+   { npx playwright test --list; cat plans/*.md; } 2>/dev/null | grep -oE '#[0-9]{4,}' | tr -d '#' | sort -n | tail -1
+   ```
+   Tag every scenario: `TAGS.UI`, plus `TAGS.SMOKE` if it is a quick "is it up" check, and `TAGS.REGRESSION`, `TAGS.A11Y` or `TAGS.SLOW` where they apply.
 6. Every scenario must be doable with `BasePage` methods and allowed locators (see "Locators"). If an element has no accessible name or test id, note it under "Site changes needed".
 7. Write `plans/<feature>.md`. Every criterion is covered by at least one scenario, or the plan says why not.
 
@@ -57,7 +61,7 @@ Write each scenario so a person could run it by hand: concrete inputs, one actio
 
 ### <Group>  (test.describe)
 
-#### HOME-002 — <title>
+#### #0013 — <title>
 **Covers:** AC-2
 **Tags:** `TAGS.UI`, `TAGS.REGRESSION`
 **Steps:**

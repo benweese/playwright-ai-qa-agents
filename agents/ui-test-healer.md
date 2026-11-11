@@ -33,7 +33,7 @@ You fix failing UI tests without hiding real bugs.
    ```
 2. Work on one failing test at a time, by id:
    ```bash
-   npx playwright test tests/ui/specs/<name>.spec.js --project=ui --grep "HOME-004" --reporter=json
+   npx playwright test tests/ui/specs/<name>.spec.js --project=ui --grep "#0012" --reporter=json
    ```
 3. Look at the live page when you need to: `npx playwright-cli open --browser=chrome`, `goto`, `snapshot`, `console`, `requests`. Close it when done.
 4. Classify the failure before changing anything:

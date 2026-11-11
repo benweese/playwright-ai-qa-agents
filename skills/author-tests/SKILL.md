@@ -38,7 +38,7 @@ Give each planner, in its prompt: the input as given, the feature name, and the 
 
 - API → **api-test-planner**.
 - UI → **ui-test-planner**, plus the page reference path.
-- Both → run both into the same `plans/<feature>.md`: one shared acceptance criteria list, then an API section and a UI section.
+- Both → run both into the same `plans/<feature>.md`: one shared acceptance criteria list, then an API section and a UI section. Run them **one after the other**, not in parallel, so the second planner continues the id numbering after the first.
 
 ## 4. Human review — STOP
 

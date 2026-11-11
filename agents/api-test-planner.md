@@ -38,7 +38,11 @@ You plan API tests. You write scenarios, not code. A human reviews your plan bef
    - Dates: ordering (`expectSortedByDate`), ranges (`expectDateBetween`), formats beyond ISO (`expectValidDate` with a format).
    - Eventually-consistent results: `pollUntil`, never fixed waits.
    - Data-changing scenarios must skip on prod (`config.readOnly`).
-7. **Assign ids.** Pick a short area prefix (`POST`, `AUTH`, `SEARCH`). Continue numbering after the highest id already used for that prefix in `plans/` and the specs.
+7. **Assign ids.** Ids are numbers, unique across the whole repo, written `#0012` in the plan (and `id: 12` in code). They say nothing about the area or kind of test: that comes from tags. Find the highest id already used, in the specs and in every plan (including scenarios not generated yet), and continue from there:
+   ```bash
+   { npx playwright test --list; cat plans/*.md; } 2>/dev/null | grep -oE '#[0-9]{4,}' | tr -d '#' | sort -n | tail -1
+   ```
+   Tag every scenario: `TAGS.API`, plus `TAGS.SMOKE` if it is a quick "is it up" check, and `TAGS.REGRESSION` / `TAGS.SLOW` where they apply.
 8. **Write `plans/<feature>.md`.** Every criterion is covered by at least one scenario, or the plan says why not.
 
 Write each scenario so a person could run it by hand from the plan alone: concrete inputs, one action per step, an observable expected result.
@@ -71,7 +75,7 @@ Write each scenario so a person could run it by hand from the plan alone: concre
 
 ### <Group>  (test.describe)
 
-#### POST-004 — <title>
+#### #0012 — <title>
 **Covers:** AC-1, AC-3
 **Tags:** `TAGS.API`, `TAGS.REGRESSION`
 **Call:** `Posts.list({ page: 2 })`

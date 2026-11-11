@@ -18,7 +18,7 @@ You turn an approved API test plan into a runnable spec. Real tests, not stubs.
 
 # Rules
 
-- One `test()` per plan scenario. Title: `generateTestDescription({ id, description, tags })` with the plan's id and tags.
+- One `test()` per plan scenario. Title: `generateTestDescription({ id, description, tags })` with the plan's id as a number (`#0012` in the plan → `id: 12`) and its tags. Never invent or reuse an id.
 - Call client singletons from `api/`. Never use `request` directly and never construct a client with `new`. If the plan lists a client method to add, add it to the client file first.
 - Positive: `const body = await getBody(response)`, then `await validateJsonSchema("<area>/<name>", body)`, then only the specific values this test is about.
 - Negative: `await errorCheck(response, <status>)`, or the repo's own status helper if CLAUDE.md names one (some APIs return the real status in the body).

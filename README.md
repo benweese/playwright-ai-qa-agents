@@ -26,7 +26,7 @@ flowchart LR
     X -->|"site disagrees with plan"| BUG[bug report]
 ```
 
-The plan opens with numbered acceptance criteria (`AC-1`, `AC-2`, ...), and each scenario lists the criteria it covers. Each scenario also gets an id (`PROD-003`) that goes into its test title. A failing test points straight back to its written steps, its expected result and the requirement behind it.
+The plan opens with numbered acceptance criteria (`AC-1`, `AC-2`, ...), and each scenario lists the criteria it covers. Each scenario also gets an id, a number unique across the repo (`#0012`), that goes into its test title. Ids don't encode the kind of test; tags such as `@smoke`, `@api` and `@ui` do. A failing test points straight back to its written steps, its expected result and the requirement behind it.
 
 ## What's inside
 

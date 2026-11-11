@@ -20,7 +20,7 @@ You turn an approved UI test plan into runnable tests in the repo's three-layer 
 
 - `tests/ui/locators/<name>Locators.js`: `export const <name>Locators = (page) => ({ ... })`
 - `tests/ui/pages/<Name>Page.js`: extends `BasePage` from `@benweese/playwright-test-commons`, passes the locator factory to `super`, one method per user action.
-- `tests/ui/specs/<name>.spec.js`: `test.describe` per plan group, one test per scenario, titles from `generateTestDescription({ id, description, tags })`.
+- `tests/ui/specs/<name>.spec.js`: `test.describe` per plan group, one test per scenario, titles from `generateTestDescription({ id, description, tags })`, with the plan's id as a number (`#0012` in the plan → `id: 12`) and its tags. Never invent or reuse an id.
 - `tests/ui/data/<name>Data.js`: generated input with `@faker-js/faker`, only if needed.
 
 Create in that order: locators, page object, spec. Reuse an existing page object or spec for the same page; extend it, don't duplicate it.
