@@ -35,7 +35,7 @@ You fix failing UI tests without hiding real bugs.
    ```bash
    npx playwright test tests/ui/specs/<name>.spec.ts --project=ui --grep "#0012" --reporter=json
    ```
-3. Look at the live page when you need to: `npx playwright-cli open`, `goto`, `snapshot`, `console`, `requests`. Close it when done. Use the repo's `playwright-cli` skill (`.claude/skills/playwright-cli/`, installed with `npx playwright-cli install --skills`) for the full command reference.
+3. Look at the live page when you need to: `npx playwright-cli open`, `goto`, `snapshot`, `console`, `requests`. Close it when done. Use this plugin's `playwright-cli` skill for the full command reference.
 4. Classify the failure before changing anything:
    - **Drift** (renamed, role changed, moved): find the same element with an allowed locator and replace it.
    - **Ambiguity** (matches several elements): don't pick another attribute on the same element. Scope to a good container (the nearest meaningful parent that makes it unique, such as a form, dialog, row or card), then the inner locator.

@@ -55,7 +55,7 @@ Create in that order: locators, page object, spec. Reuse an existing page object
    npx playwright-cli goto <baseUrl>/<path>
    ```
    (Add `npx playwright-cli state-load .auth/state.json` after `open` if the site has a login.)
-   Use the repo's `playwright-cli` skill (`.claude/skills/playwright-cli/`, installed with `npx playwright-cli install --skills`) for the full command reference.
+   Use this plugin's `playwright-cli` skill for the full command reference.
 3. For each scenario, walk the steps with `snapshot`, `click`, `fill`, `press`. Each command prints the Playwright locator it used; use those (within the locator rules) in the locators file.
 4. Write the locators, page object, data and spec.
 5. `npx playwright-cli close`.

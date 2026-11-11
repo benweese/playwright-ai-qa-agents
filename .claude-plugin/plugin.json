@@ -1,6 +1,6 @@
 {
 	"name": "playwright-qa-agents",
-	"version": "0.4.1",
+	"version": "0.5.0",
 	"description": "Claude Code agents and skills that plan, generate, run and heal Playwright API and UI tests, with a human review step between plan and code.",
 	"author": { "name": "Ben Weese", "url": "https://benweese.com" },
 	"homepage": "https://github.com/benweese/playwright-ai-qa-agents",

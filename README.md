@@ -44,6 +44,20 @@ The plan opens with numbered acceptance criteria (`AC-1`, `AC-2`, ...), and each
 | `/playwright-qa-agents:run-spec <path \| project \| id>` | Run and summarize |
 | `/playwright-qa-agents:check [fix]` | Lint |
 | `/playwright-qa-agents:bug-report <description>` | Write a bug report to `bugs/` |
+| `/playwright-qa-agents:playwright-cli` | Playwright's own skill for driving a browser with `playwright-cli`, used by the page-mapper, UI generator and healer (see below) |
+
+## Bundled: Playwright's `playwright-cli` skill
+
+`skills/playwright-cli/` is Playwright's own skill for [`@playwright/cli`](https://www.npmjs.com/package/@playwright/cli): the full command reference, plus guides on element attributes, request mocking, storage state, tracing and more. It is copied unchanged from the npm package and keeps its Apache-2.0 [LICENSE](skills/playwright-cli/LICENSE). Don't edit it here. To update it to the latest `@playwright/cli`:
+
+```bash
+tmp=$(mktemp -d)
+npm pack @playwright/cli@latest --pack-destination "$tmp"
+tar -xzf "$tmp"/playwright-cli-*.tgz -C "$tmp"
+rm -rf skills/playwright-cli
+cp -r "$tmp/package/skills/playwright-cli" skills/
+cp "$tmp/package/LICENSE" skills/playwright-cli/
+```
 
 ## Guardrails
 
@@ -81,7 +95,7 @@ Or from inside Claude Code:
 
 ### What the test repo needs
 
-The agents expect the layout used by [playwright-e2e-demo](https://github.com/benweese/playwright-e2e-demo): `api/` clients, `tests/api|ui/` specs, `schemas/`, `plans/`, `docs/pages/`, TypeScript with a `playwright.config.ts` at the repo root, `@playwright/cli` with its skill installed (`npx playwright-cli install --skills`), an `npm run lint` that includes the type-check, and a `CLAUDE.md` that describes the repo's rules. The tests use [playwright-test-commons](https://github.com/benweese/playwright-test-commons).
+The agents expect the layout used by [playwright-e2e-demo](https://github.com/benweese/playwright-e2e-demo): `api/` clients, `tests/api|ui/` specs, `schemas/`, `plans/`, `docs/pages/`, TypeScript with a `playwright.config.ts` at the repo root, `@playwright/cli` as a dev dependency, an `npm run lint` that includes the type-check, and a `CLAUDE.md` that describes the repo's rules. The tests use [playwright-test-commons](https://github.com/benweese/playwright-test-commons).
 
 ## Development
 
