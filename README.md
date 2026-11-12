@@ -51,7 +51,7 @@ The terminal works everywhere. The `/plugin` command isn't available in every cl
 /plugin install playwright-qa-agents@playwright-ai-qa-agents
 ```
 
-**Plugins load when a session starts.** After installing, start a new Claude Code session (or reload the editor window) before using the agents.
+**Plugins load when a session starts.** After installing, start a new Claude Code session before using the agents. In VS Code, run **Developer: Reload Window** from the command palette, or open a new Claude Code tab.
 
 To suggest the plugin to everyone who opens the test repo, also name it in the repo's `.claude/settings.json`:
 
@@ -71,9 +71,19 @@ To suggest the plugin to everyone who opens the test repo, also name it in the r
 }
 ```
 
-This records the marketplace and the plugin, but it doesn't always install it: in the VS Code extension the plugin didn't load until it was installed from a terminal as above. Keep the terminal steps in the test repo's README.
+This records the marketplace and the plugin, but it doesn't install it on its own: in the VS Code extension the plugin didn't load from this file alone, only after the terminal install above. Keep the terminal steps in the test repo's README.
 
 To pick up a new version, run `claude plugin update playwright-qa-agents@playwright-ai-qa-agents` (or `/plugin update`), then start a new session.
+
+### Check it loaded
+
+Claude Code no longer has an `/agents` command. Instead, ask Claude in the new session:
+
+```
+List the subagents and skills from the playwright-qa-agents plugin.
+```
+
+It should name six agents (`page-mapper`, `api-test-planner`, `ui-test-planner`, `api-test-generator`, `ui-test-generator`, `ui-test-healer`) and the skills in the [Skills](#skills) table, each prefixed `playwright-qa-agents:`. If it finds none, the plugin isn't installed or the session started before the install: run `claude plugin list` in a terminal, then start a new session.
 
 ### What the test repo needs
 
@@ -161,7 +171,7 @@ claude plugin validate .
 
 After editing, start a new Claude Code session (or run `/reload-plugins` where your client has it) to load the changes.
 
-**Releasing:** bump `version` in both `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`, then push to `main`. Users get it with `/plugin update`.
+**Releasing:** bump `version` in both `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`, then push to `main`. Users get it with `claude plugin update playwright-qa-agents@playwright-ai-qa-agents` (or `/plugin update` where their client has it), then a new session.
 
 Dependabot keeps the GitHub Actions in the workflow current.
 
