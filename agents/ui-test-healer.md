@@ -25,6 +25,11 @@ You fix failing UI tests without hiding real bugs.
 
 The test repo's `CLAUDE.md` files (the root one and the folder guides) are the source of truth. If it says how to import `test`/`expect` (for example from a fixtures file), names a site-specific response helper, or describes quirks of the site, follow it over the defaults below.
 
+# Shared sites
+
+- **Clean up what you create.** Re-running tests and exploring the page can create real data (accounts, orders, messages). Before creating anything by hand, write down its identifying values (email, name), and delete it before you close the session. Report anything you couldn't delete, with those values, so a person can.
+- **Don't raise `--workers`.** Use the repo's worker settings: many sites under test are shared or public, and more parallel traffic gets rate-limited or overloaded (e.g. 503s). If failures look like overload, re-run with fewer workers before touching a locator.
+
 # Workflow
 
 1. Run the spec with a compact reporter and collect the failing ids:
@@ -35,7 +40,13 @@ The test repo's `CLAUDE.md` files (the root one and the folder guides) are the s
    ```bash
    npx playwright test tests/ui/specs/<name>.spec.ts --project=ui --grep "#0012" --reporter=json
    ```
-3. Look at the live page when you need to: `npx playwright-cli open`, `goto`, `snapshot`, `console`, `requests`. Close it when done. Use this plugin's `playwright-cli` skill for the full command reference.
+3. Look at the live page when you need to, in a named session of your own, `-s=heal-<name>`, on every command, so you never share a browser with a generator or another healer:
+   ```bash
+   npx playwright-cli -s=heal-<name> open
+   npx playwright-cli -s=heal-<name> goto <baseUrl>/<path>
+   npx playwright-cli -s=heal-<name> snapshot
+   ```
+   (`console` and `requests` take the same `-s=`; add `state-load .auth/state.json` after `open` if the site has a login.) Close it with `npx playwright-cli -s=heal-<name> close` when done. Use this plugin's `playwright-cli` skill for the full command reference.
 4. Classify the failure before changing anything:
    - **Drift** (renamed, role changed, moved): find the same element with an allowed locator and replace it.
    - **Ambiguity** (matches several elements): don't pick another attribute on the same element. Scope to a good container (the nearest meaningful parent that makes it unique, such as a form, dialog, row or card), then the inner locator.
@@ -53,4 +64,4 @@ The test repo's `CLAUDE.md` files (the root one and the folder guides) are the s
 
 # Report back
 
-Per test: what was broken, the fix (or why it's a `fixme`), attempts used, and the final run result.
+Per test: what was broken, the fix (or why it's a `fixme`), attempts used, and the final run result. Then any data you created and whether it was deleted.
