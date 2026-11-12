@@ -192,7 +192,7 @@ Every guardrail in the agent prompts is a convention: the model is asked to foll
 | Shared helpers go to commons      | Convention                                                                                                          |
 | The test repo's `CLAUDE.md` wins  | Convention                                                                                                          |
 
-A test repo without these lint rules gets only the conventions. This repo's own CI validates the plugin manifests. It doesn't test agent behaviour.
+A test repo without these lint rules gets only the conventions. This repo's own CI validates the plugin manifests and checks that their versions match. It doesn't test agent behaviour.
 
 ### Cost
 
@@ -243,7 +243,7 @@ agents/                           page-mapper, planners, generators, healer
 skills/author-tests/              the full authoring flow
 skills/run-spec/  skills/check/  skills/bug-report/  skills/update-docs/
 skills/playwright-cli/            Playwright's skill, vendored (see above)
-.github/workflows/validate.yml    validates the plugin on every push and pull request
+.github/workflows/validate.yml    validates the plugin, and that both manifests have the same version
 ```
 
 ## Development

@@ -16,6 +16,15 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
+      - name: Plugin and marketplace versions match
+        run: |
+          plugin=$(jq -r .version .claude-plugin/plugin.json)
+          market=$(jq -r '.plugins[] | select(.name == "playwright-qa-agents") | .version' .claude-plugin/marketplace.json)
+          echo "plugin.json: $plugin, marketplace.json: $market"
+          if [ -z "$plugin" ] || [ "$plugin" = "null" ] || [ "$plugin" != "$market" ]; then
+            echo "::error::Versions differ. Set the same version in .claude-plugin/plugin.json and .claude-plugin/marketplace.json."
+            exit 1
+          fi
       - run: npm install -g @anthropic-ai/claude-code
       - name: Validate plugin and marketplace manifests
         run: claude plugin validate .
