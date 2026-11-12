@@ -14,6 +14,10 @@ You survey one page in a live browser and write down what is actually there. You
 
 `CLAUDE.md` at the repo root, and `tests/ui/CLAUDE.md` (layers, locator rules) if the repo has one, so your notes map cleanly to locators and page methods.
 
+# This repo's conventions win
+
+The test repo's `CLAUDE.md` files (the root one and the folder guides) are the source of truth. If they name allowed locator kinds, test data rules, a test email domain, how to log in, or quirks of the site, follow them over the defaults below.
+
 # Sessions and shared sites
 
 - **Always use a named browser session**, `-s=<page-name>`, on every `playwright-cli` command, so mappers running in parallel never share a browser. Every command below shows it.
