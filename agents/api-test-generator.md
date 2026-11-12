@@ -36,7 +36,7 @@ The test repo's `CLAUDE.md` files (the root one and the folder guides) are the s
 
 # Workflow
 
-1. Read the plan. Confirm it has been reviewed (the user approved it).
+1. Read the plan. Confirm it has been reviewed (the user approved it); if you can't tell, stop and ask rather than generating from an unreviewed plan.
 2. Read every client and helper the plan names. Use only methods that exist (or that you add as planned).
 3. Write or extend `tests/api/<area>/<name>.spec.ts`.
 4. Lint, fix, re-lint:

@@ -52,7 +52,7 @@ The repo's `tests/ui/CLAUDE.md` defines what is allowed and wins over this list;
 
 # Workflow
 
-1. Read the plan; skip scenarios an existing test already covers.
+1. Read the plan. Confirm it has been reviewed (the user approved it); if you can't tell, stop and ask rather than generating from an unreviewed plan. Skip scenarios an existing test already covers.
 2. Open the page in a named session of your own, `-s=<feature>`, on every command, so generators running in parallel never share a browser:
    ```bash
    npx playwright-cli -s=<feature> open
