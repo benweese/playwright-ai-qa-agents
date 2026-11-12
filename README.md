@@ -37,7 +37,23 @@ The plan opens with numbered acceptance criteria (`AC-1`, `AC-2`, ...), and each
 
 ## Install
 
-In the test repo's `.claude/settings.json`, so everyone who opens the repo gets the plugin:
+From a terminal, in the test repo:
+
+```bash
+claude plugin marketplace add benweese/playwright-ai-qa-agents
+claude plugin install playwright-qa-agents@playwright-ai-qa-agents
+```
+
+The terminal works everywhere. The `/plugin` command isn't available in every client (the VS Code extension doesn't have it); where it is, these do the same:
+
+```
+/plugin marketplace add benweese/playwright-ai-qa-agents
+/plugin install playwright-qa-agents@playwright-ai-qa-agents
+```
+
+**Plugins load when a session starts.** After installing, start a new Claude Code session (or reload the editor window) before using the agents.
+
+To suggest the plugin to everyone who opens the test repo, also name it in the repo's `.claude/settings.json`:
 
 ```json
 {
@@ -55,20 +71,15 @@ In the test repo's `.claude/settings.json`, so everyone who opens the repo gets 
 }
 ```
 
-Or from inside Claude Code:
+This records the marketplace and the plugin, but it doesn't always install it: in the VS Code extension the plugin didn't load until it was installed from a terminal as above. Keep the terminal steps in the test repo's README.
 
-```
-/plugin marketplace add benweese/playwright-ai-qa-agents
-/plugin install playwright-qa-agents@playwright-ai-qa-agents
-```
-
-Run `/plugin update` to pick up a new version.
+To pick up a new version, run `claude plugin update playwright-qa-agents@playwright-ai-qa-agents` (or `/plugin update`), then start a new session.
 
 ### What the test repo needs
 
 - The layout used by playwright-e2e-demo: `api/` clients, `tests/api/` and `tests/ui/` specs, `schemas/`, `plans/` and `docs/pages/`
 - TypeScript, with `playwright.config.ts` at the repo root
-- [playwright-test-commons](https://github.com/benweese/playwright-test-commons) v0.4.0 or later (typed API responses, numeric test ids)
+- [playwright-test-commons](https://github.com/benweese/playwright-test-commons) v0.7.0 or later (typed API responses, numeric test ids, and the `BasePage` checks, accessibility scan and `uniqueEmail` the generators use)
 - `@playwright/cli` as a dev dependency, for the agents that drive a browser
 - `npm run lint` that includes the type-check (and ideally JSDoc rules)
 - A `CLAUDE.md` describing the repo's rules, helpers and site quirks, ideally split into a short root file and a guide per folder (`api/`, `tests/api/`, `tests/ui/`, `plans/`, ...) so each session loads only what it needs. Agents follow them over their own defaults
@@ -85,13 +96,13 @@ It maps the page, drafts `plans/<feature>.md` and **stops for your review**. Onc
 
 ### Agents
 
-| Agent                                  | Job                                                                                                                                                                                     |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `page-mapper`                          | Walks one live page with `playwright-cli` and documents its controls, URL params, validation and empty states in `docs/pages/<page>.md`                                                 |
-| `api-test-planner` / `ui-test-planner` | Turn the description into numbered acceptance criteria, then hand-runnable scenarios that cover them. They check existing tests and clients first, so nothing is duplicated or invented |
-| `api-test-generator`                   | Writes the spec and any planned client methods (typed and documented), generates and tightens JSON schemas, lints and runs                                                              |
-| `ui-test-generator`                    | Writes locators → page object → spec, using the locators the live page actually exposes                                                                                                 |
-| `ui-test-healer`                       | Fixes drift, ambiguity and timing failures, one test at a time, with at most 3 attempts per test                                                                                        |
+| Agent                                  | Job                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `page-mapper`                          | Walks one live page with `playwright-cli`, in its own browser session, and documents its controls, input behaviour, URL params, validation, success, empty and error states, and multi-page flows in `docs/pages/<page>.md`. It records what the page does today, and flags what looks like a bug                                                                                                                                                          |
+| `api-test-planner` / `ui-test-planner` | Turn the description into numbered acceptance criteria, then hand-runnable scenarios that cover them. They check existing tests and clients first, so nothing is duplicated or invented. The API planner lists the schemas needed and leaves undocumented negative cases as open questions; the UI planner writes expected results from the requirement, not the page, lists the differences as expected findings, and checks every element can be located |
+| `api-test-generator`                   | Writes the spec and any planned client methods (typed and documented), generates and tightens JSON schemas with `UPDATE_SCHEMAS=true`, lints and runs                                                                                                                                                                                                                                                                                                      |
+| `ui-test-generator`                    | Writes locators → page object → spec, using the locators the live page actually exposes, in its own browser session. Deletes anything it creates while exploring                                                                                                                                                                                                                                                                                           |
+| `ui-test-healer`                       | Fixes drift, ambiguity and timing failures, one test at a time, with at most 3 attempts per test                                                                                                                                                                                                                                                                                                                                                           |
 
 ### Skills
 
@@ -111,7 +122,10 @@ These rules exist because AI test authoring fails in predictable ways:
 - **Plan, review, then generate.** Duplicate scenarios, untestable criteria and wrong assumptions are cheapest to catch in a plan, before code exists.
 - **Assert the plan, not what you see.** An agent driving a live site will happily encode a bug as expected behaviour. Generators and the healer keep the plan's assertion, leave the test failing, and report the difference.
 - **A healing budget.** Three attempts per test, then a `// Fixme:` note saying what was tried. Without a limit, a healer flips between locators forever.
-- **Two-tier locators.** Elements are acted on only through `getBy*`. When no good locator is unique on its own, the agent scopes to a good container first (the nearest meaningful parent, such as a form, dialog, row or card) and finds the element inside it. No XPath, generated class names or `.nth()`.
+- **Two-tier locators.** Elements are acted on through `getBy*`, plus whatever the test repo's `tests/ui/CLAUDE.md` also allows (such as stable `data-*` attributes). When no good locator is unique on its own, the agent scopes to a good container first (the nearest meaningful parent, such as a form, dialog, row or card) and finds the element inside it. No XPath, generated class names or `.nth()`.
+- **No serial mode.** One failure in a serial block skips the rest and hides what they'd find, so tests that share data create it per worker instead.
+- **Clean up and go easy on shared sites.** Each agent uses its own named browser session, records and deletes any account or record it creates, and never raises the worker count against a site other people use.
+- **Shared helpers go to commons.** A helper any site could use belongs in playwright-test-commons, not the test repo; generators report it as a commons candidate instead of adding a local helper file.
 - **The test repo's `CLAUDE.md` wins.** Agents read the repo's own rules, helpers and site quirks before applying their defaults, so the plugin works across different suites.
 
 ## Bundled: Playwright's `playwright-cli` skill
@@ -145,7 +159,7 @@ skills/playwright-cli/            Playwright's skill, vendored (see above)
 claude plugin validate .
 ```
 
-After editing, run `/reload-plugins` in Claude Code to load the changes.
+After editing, start a new Claude Code session (or run `/reload-plugins` where your client has it) to load the changes.
 
 **Releasing:** bump `version` in both `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`, then push to `main`. Users get it with `/plugin update`.
 

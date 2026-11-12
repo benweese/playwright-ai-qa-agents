@@ -18,16 +18,17 @@ The test repo's `CLAUDE.md` files (the root one and the folder guides) are the s
 
 # Rules
 
-- One `test()` per plan scenario. Title: `generateTestDescription({ id, description, tags })` with the plan's id as a number (`#0012` in the plan → `id: 12`) and its tags. Never invent or reuse an id.
-- Call client singletons from `api/`. Never use `request` directly and never construct a client with `new`. If the plan lists a client method to add, add it to the client file first.
-- Positive: `const body = await getBody(response)`, then `await validateJsonSchema("<area>/<name>", body)`, then only the specific values this test is about.
-- Negative: `await errorCheck(response, <status>)`, or the repo's own status helper if CLAUDE.md names one (some APIs return the real status in the body).
+- One `test()` per plan scenario. Title: `generateTestDescription({ id, description, tags })` with the plan's id as a number (`#0012` in the plan → `id: 12`) and its tags. Never invent or reuse an id. A scenario with several inputs (search terms, ids) is still one test: loop over them inside it, each in its own `test.step`.
+- Call client singletons from `api/`. Never use `request` directly and never construct a client with `new`. If the plan lists a client method to add, add it to the client file first. A negative case (wrong verb, missing parameter) gets its own named client method, e.g. `listWithPut()`, rather than raw arguments in the spec.
+- **Status checks.** If the repo's `CLAUDE.md` names its own status helper (some APIs always answer HTTP 200 and put the real status in the body), use it for every response, success and error alike, instead of both `getBody` and `errorCheck`. Otherwise, positive: `const body = await getBody(response)`; negative: `await errorCheck(response, <status>)`. Then `await validateJsonSchema("<area>/<name>", body)`, then only the specific values this test is about.
 - Dates: the schema check already validates date fields. Add `expectSortedByDate` / `expectDateBetween` / `expectValidDate` only where the plan asks for ordering, ranges or a non-ISO format.
-- New endpoint with no schema yet: run the test once with `{ update: true }`, read the generated file in `schemas/`, tighten it (required fields, enums), then **remove the flag**. Never leave `update: true` in a spec.
+- **New schemas.** Run the one test with the environment variable set: `UPDATE_SCHEMAS=true npx playwright test --grep "#0012"`. Read the generated file in `schemas/`, tighten it (required fields, enums, formats), and run again without the variable. Never write `{ update: true }` into a spec. If the response disagrees with the plan (a wrong code or message), don't generate from it: write the schema by hand to the documented shape, as the repo's `schemas/CLAUDE.md` says.
 - `expect.soft` for property checks; hard `expect` only when a later step depends on the value.
-- `test.describe.parallel` for independent tests; `test.describe.serial` only when tests share created data (`let` at describe scope).
+- **Never serial.** No `test.describe.serial` and no `mode: "serial"`: one failure would skip every later test in the block and hide what they'd find. Plain `test.describe`. Tests that share created data create it per worker in `beforeAll` and delete it in `afterAll`.
 - No `if` guards around assertions and no conditional `test.skip()` to make a test pass.
-- Multi-step flows used by more than one test go in `helpers/`, exported from `helpers/index.ts`.
+- **Cleanup without conditionals.** A test that creates data creates it in a `try` and deletes it unconditionally in `finally`; keep the create response in a variable and assert on it after the block. Don't write `if (created) delete(...)`: it hides a failed create and trips lint rules against conditionals in tests.
+- Multi-step flows used by more than one test go in `helpers/`, exported from `helpers/index.ts`. A helper any repo could use (not tied to this site's API) belongs in commons, not here: write what the test needs, then list it under "Commons candidates" in your report.
+- **Check what a helper does before relying on it.** Read its source (`node_modules/@benweese/playwright-test-commons/src/` for commons) before claiming it is hard or soft, what it asserts, or what it returns. Don't add workarounds for behaviour you haven't confirmed.
 - **Assert what the plan says, not what you observe.** If the API disagrees with the plan, keep the plan's assertion so the test fails, and report the difference. Never change the assertion to match.
 - Extend an existing spec for the area instead of creating a second one.
 - **TypeScript.** Write `.ts` files with types on every parameter. Type each response body once, in the client method (`this.get<ProductList>("productsList")`, with the shape in the repo's types file): Playwright's `APIResponse<T>` then types `getBody`, `pollUntil` and the repo's helpers, so specs don't repeat it. No `any`, and use `import type` for type-only imports. Finish with the repo's lint, which includes the type-check.
@@ -51,4 +52,4 @@ The test repo's `CLAUDE.md` files (the root one and the folder guides) are the s
 
 # Report back
 
-Spec path (created or extended), tests written with their ids, clients/helpers added, schemas created, lint result, run result, and any plan-vs-API differences (expected vs actual).
+Spec path (created or extended), tests written with their ids, clients/helpers added, schemas created (generated or hand-written, and why), lint result, run result, any plan-vs-API differences (expected vs actual), and commons candidates.

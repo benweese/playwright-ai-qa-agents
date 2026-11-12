@@ -38,10 +38,13 @@ The test repo's `CLAUDE.md` files (the root one and the folder guides) are the s
    - Dates: ordering (`expectSortedByDate`), ranges (`expectDateBetween`), formats beyond ISO (`expectValidDate` with a format).
    - Eventually-consistent results: `pollUntil`, never fixed waits.
    - Data-changing scenarios clean up what they create (see the repo's CLAUDE.md).
+
+   **Negative cases the docs don't cover.** Plan a negative scenario only when the source says what should happen (the status, code or message). If the source is silent (say, an empty search term or an oversized body), don't invent an expected result: list the case under "Open questions" with what you'd test, and let the reviewer decide whether it's in scope and what it should return. A scenario that asserts a guessed result either fails for no real reason or passes against a bug.
 7. **Assign ids.** Ids are numbers, unique across the whole repo, written `#0012` in the plan (and `id: 12` in code). They say nothing about the area or kind of test: that comes from tags. Find the highest id already used, in the specs and in every plan (including scenarios not generated yet), and continue from there:
    ```bash
    { npx playwright test --list; cat plans/*.md; } 2>/dev/null | grep -oE '#[0-9]{4,}' | tr -d '#' | sort -n | tail -1
    ```
+   It prints nothing when there are no specs and no plans yet (`--list` fails without test files, and the error is hidden). Empty output means no ids are in use yet: start at `#0001`.
    Tag every scenario: `TAGS.API`, plus `TAGS.SMOKE` if it is a quick "is it up" check, and `TAGS.REGRESSION` / `TAGS.SLOW` where they apply.
 8. **Write `plans/<feature>.md`.** Every criterion is covered by at least one scenario, or the plan says why not.
 
@@ -67,6 +70,14 @@ Write each scenario so a person could run it by hand from the plan alone: concre
 - Reuse: <existing helpers>
 - Create: <new helper in helpers/, or "none">
 
+## Schemas
+| Schema | Response it describes | Used by | Exists / Create |
+|---|---|---|---|
+| `<area>/<name>` | `<VERB> <path>`, success body | #0012, #0013 | Create |
+| `<area>/apiMessage` | error body `{ status/code, message }` | #0014 | Exists |
+
+One schema per response shape, not per test; error bodies that share a shape share a schema. For each new schema, note what the docs say about it (required fields, fixed values, date or email formats) so the generator can tighten the generated file. Where the live API already disagrees with the docs, say so: that schema must be written by hand to the documented shape, never generated from the wrong response.
+
 ## Already covered
 | id | Description | Skip / Extend |
 |---|---|---|
@@ -88,7 +99,7 @@ Write each scenario so a person could run it by hand from the plan alone: concre
 - <specific values this test cares about>
 
 ## Open questions
-- <unknown error codes, missing test data, unclear rules>
+- <unknown error codes, missing test data, unclear rules, negative cases the docs don't cover>
 ```
 
 # Don't
@@ -99,4 +110,4 @@ Write each scenario so a person could run it by hand from the plan alone: concre
 
 # Report back
 
-Plan path, acceptance criteria (and any not covered, with why), spec file (create vs extend), scenario count, ids used, scenarios skipped as already covered, clients to add, open questions.
+Plan path, acceptance criteria (and any not covered, with why), spec file (create vs extend), scenario count, ids used, scenarios skipped as already covered, clients to add, schemas to create, open questions (including undocumented negative cases left out).
