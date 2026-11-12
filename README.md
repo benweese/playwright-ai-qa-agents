@@ -183,8 +183,8 @@ Every guardrail in the agent prompts is a convention: the model is asked to foll
 | 3-attempt healing budget          | Convention: the healer counts its own attempts                                                                      |
 | Locator rules                     | Partly enforced. Lint fails on XPath and on `.first()`/`.nth()`/`.last()`. Class names and ids are convention       |
 | No fixed waits, no `networkidle`  | Enforced: lint errors                                                                                               |
-| Parallel, not serial              | Convention. No lint rule blocks `test.describe.serial` or `mode: "serial"`                                          |
-| No conditional skips or guards    | Warned only. `eslint-plugin-playwright` reports them as warnings, and lint passes with warnings                     |
+| Parallel, not serial              | Enforced (lint error in playwright-e2e-demo)                                                                        |
+| No skipped or conditional tests   | Enforced (lint error in playwright-e2e-demo)                                                                        |
 | Unique numeric test ids           | Enforced: `check-test-ids` runs in `npm run lint`                                                                   |
 | Types and JSDoc on reusable code  | Enforced: `tsc` and `eslint-plugin-jsdoc` in `npm run lint`                                                         |
 | Don't raise the worker count      | Enforced by default with `workers: 2` in `playwright.config.ts`, but an agent can still pass `--workers`            |
