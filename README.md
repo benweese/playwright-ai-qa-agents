@@ -243,6 +243,8 @@ agents/                           page-mapper, planners, generators, healer
 skills/author-tests/              the full authoring flow
 skills/run-spec/  skills/check/  skills/bug-report/  skills/update-docs/
 skills/playwright-cli/            Playwright's skill, vendored (see above)
+docs/worked-example.md            one feature followed through every stage
+CHANGELOG.md                      what changed in each version
 .github/workflows/validate.yml    validates the plugin, and that both manifests have the same version
 ```
 
@@ -254,7 +256,7 @@ claude plugin validate .
 
 After editing, start a new Claude Code session (or run `/reload-plugins` where your client has it) to load the changes.
 
-**Releasing:** bump `version` in both `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`, then push to `main`. Users get it with `claude plugin update playwright-qa-agents@playwright-ai-qa-agents` (or `/plugin update` where their client has it), then a new session.
+**Releasing:** bump `version` in both `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` (CI fails if they differ), add an entry to [CHANGELOG.md](CHANGELOG.md), push to `main`, then tag the commit `v<version>` and push the tag. Users get it with `claude plugin update playwright-qa-agents@playwright-ai-qa-agents` (or `/plugin update` where their client has it), then a new session.
 
 Dependabot keeps the GitHub Actions in the workflow current.
 
