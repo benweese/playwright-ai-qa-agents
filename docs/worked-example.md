@@ -2,7 +2,7 @@
 
 This follows one feature of [playwright-e2e-demo](https://github.com/benweese/playwright-e2e-demo), the shopping cart on [automationexercise.com](https://automationexercise.com), through every stage of the plugin. It's the feature where the most happened: review changed how its plan locates elements, and it's the one test in the suite that needed the healer.
 
-Links point at the files as committed in [`fd06ed7`](https://github.com/benweese/playwright-e2e-demo/commit/fd06ed7746d73a453c3812c055033e13924529a5), so the line numbers stay put. The one exception is the plan: `plans/` is git-ignored in that repo, so the plan is quoted below instead of linked.
+Links point at the files as committed in [`fd06ed7`](https://github.com/benweese/playwright-e2e-demo/commit/fd06ed7746d73a453c3812c055033e13924529a5), so the line numbers stay put. The reviewed plans were committed afterwards, in [`8448ba2`](https://github.com/benweese/playwright-e2e-demo/commit/8448ba2357729dd8643b4ad602390e83ea09c364), and links to the plan are pinned to that commit.
 
 ```
 page-mapper → ui-test-planner → review → ui-test-generator → run → ui-test-healer → review
@@ -23,18 +23,12 @@ The map also got things wrong. It recommended `page.locator("#product-1 .cart_qu
 
 ## 2. Plan
 
-The ui-test-planner turned the site's published test cases 12, 13 and 17, plus the map, into `plans/ui-cart.md`: five acceptance criteria and seven scenarios, `#0032`–`#0038`. Excerpts:
+The ui-test-planner turned the site's published test cases 12, 13 and 17, plus the map, into [`plans/ui-cart.md`](https://github.com/benweese/playwright-e2e-demo/blob/8448ba2357729dd8643b4ad602390e83ea09c364/plans/ui-cart.md): five [acceptance criteria](https://github.com/benweese/playwright-e2e-demo/blob/8448ba2357729dd8643b4ad602390e83ea09c364/plans/ui-cart.md#L10-L16) and seven scenarios, `#0032`–`#0038`. The ones that matter for the rest of this example:
 
-> **AC-4** (TC17) — "Click 'X' button corresponding to particular product. Verify that product is removed from the cart."
->
-> **AC-5** (derived; Approved by repo owner) — A cart with nothing in it says "Cart is empty!" and links to the products page.
+- **[AC-4 and AC-5](https://github.com/benweese/playwright-e2e-demo/blob/8448ba2357729dd8643b4ad602390e83ea09c364/plans/ui-cart.md#L15-L16):** removing a product removes it from the cart (test case 17), and an empty cart says "Cart is empty!" and links to the products page. AC-5 is derived, and the plan records its approval.
+- **[#0037](https://github.com/benweese/playwright-e2e-demo/blob/8448ba2357729dd8643b4ad602390e83ea09c364/plans/ui-cart.md#L113-L125)** removes the only product, and expects the row to be gone and "Cart is empty!" to show with its link to the products page.
 
-> #### #0037 — Removing the only product shows the empty-cart message
->
-> **Covers:** AC-4, AC-5 · **Tags:** `TAGS.UI`, `TAGS.REGRESSION` > **Steps:** 1. Add the product and open `/view_cart` 2. Click the remove control on its row
-> **Expected:** The product's row is gone. "Cart is empty!" is visible with the link "here" to the products page
-
-The plan also listed what the site would need for clean locators. The "Added!" modal has no `role="dialog"`, the remove control has no `aria-label`, and the grid's "Add to cart" link has no role at all.
+The plan also listed [what the site would need](https://github.com/benweese/playwright-e2e-demo/blob/8448ba2357729dd8643b4ad602390e83ea09c364/plans/ui-cart.md#L143-L149) for clean locators. The "Added!" modal has no `role="dialog"`, the remove control has no `aria-label`, and the grid's "Add to cart" link has no role at all.
 
 ## 3. Review
 
