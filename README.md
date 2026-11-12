@@ -262,13 +262,7 @@ Dependabot keeps the GitHub Actions in the workflow current.
 
 ## Background
 
-Posts on [benweese.com/blog](https://benweese.com/blog/) about why this plugin exists and how it was built:
-
-<!-- TODO: replace each placeholder with the post's title and URL once it is published. -->
-
-- _Post title_: why AI test authoring needs a plan and a human review step (https://benweese.com/blog/TODO)
-- _Post title_: building playwright-e2e-demo with these agents, and what review caught (https://benweese.com/blog/TODO)
-- _Post title_: guardrails as conventions vs guardrails as lint (https://benweese.com/blog/TODO)
+[Adding Playwright Agents: Lessons from the Deep Trenches](https://benweese.com/building-playwright-agents-lessons-from-the-deep-trenches/), on benweese.com: what came out of putting Playwright's planner, generator and healer agents to work, including token costs and weak generated checks.
 
 ## License
 
