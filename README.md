@@ -258,6 +258,16 @@ After editing, start a new Claude Code session (or run `/reload-plugins` where y
 
 Dependabot keeps the GitHub Actions in the workflow current.
 
+## Background
+
+Posts on [benweese.com/blog](https://benweese.com/blog/) about why this plugin exists and how it was built:
+
+<!-- TODO: replace each placeholder with the post's title and URL once it is published. -->
+
+- _Post title_: why AI test authoring needs a plan and a human review step (https://benweese.com/blog/TODO)
+- _Post title_: building playwright-e2e-demo with these agents, and what review caught (https://benweese.com/blog/TODO)
+- _Post title_: guardrails as conventions vs guardrails as lint (https://benweese.com/blog/TODO)
+
 ## License
 
 MIT. The bundled `skills/playwright-cli/` is Apache-2.0, from Microsoft's `@playwright/cli`.
