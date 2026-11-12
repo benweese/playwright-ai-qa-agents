@@ -13,8 +13,10 @@ All notable changes to the `playwright-qa-agents` plugin. Versions follow [seman
 
 ### Added
 
-- `docs/worked-example.md`: the cart feature of playwright-e2e-demo, from page map to the healer's final diff, with token use per stage.
-- README: how to check the plugin loaded (Claude Code no longer has `/agents`), the VS Code reload command, "What review caught", "Limitations" (convention vs enforced guardrails, measured cost, when not to use it) and "Background".
+- `docs/worked-example.md`: the cart feature of playwright-e2e-demo, from page map to the healer's final diff, with token use per stage. It links the reviewed cart plan, `plans/ui-cart.md`, pinned to the e2e commit that added it.
+- README: how to check the plugin loaded (Claude Code no longer has `/agents`), the VS Code reload command, "What review caught", "Limitations" (convention vs enforced guardrails, measured cost, when not to use it) and "Background", which links the published blog post.
+- README "Convention or enforced": serial mode and skipped or conditional tests are now lint errors in playwright-e2e-demo.
+- README "What review caught": the orphaned test account was deleted afterwards with `deleteAccount`.
 - CI fails when `plugin.json` and `marketplace.json` have different versions.
 
 ### Fixed
