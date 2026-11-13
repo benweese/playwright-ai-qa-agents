@@ -4,6 +4,10 @@
 
 A [Claude Code](https://claude.com/claude-code) plugin, `playwright-qa-agents`, that turns "test this feature" into reviewed, runnable Playwright tests in TypeScript. Agents plan the scenarios, stop for a human to review the plan, then write the API clients, page objects and specs, run them, and repair broken UI locators within a fixed budget.
 
+**[Docs site](https://code.benweese.com/playwright-ai-qa-agents/)** (this README, the worked example and the changelog)
+
+By **[Ben Weese](https://benweese.com/)** · more projects at **[code.benweese.com](https://code.benweese.com/)**
+
 ## How it fits
 
 It is one of three repos that work together:
